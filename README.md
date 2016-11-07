@@ -27,10 +27,16 @@ Role Variables
 
 - gpu: True is needed. Without it this role does nothing.
 - cuda_packages: List that can be updated to include more packages that are installed after nvidia cuda repo is installed, or to a specific cuda package (e.g. `cuda-7-5`)
-- cuda_init: Installs a bash script that is executed via systemd
 - cuda_gpu_name0: "/dev/nvidia0" # set this to the device ansible looks for. If it does not exist then if cuda_init is True then it will run the cuda_init.sh script
 - cuda_restart_node_on_install: restarts the system when packages are installed or updated
 
+Driver Persistence
+------------------
+
+In recent versions of CUDA, NVIDIA changed the persistence mechanism from `nvidia-smi` to a persistent daemon. For more information, read [this](http://docs.nvidia.com/deploy/driver-persistence/#persistence-daemon).
+
+- cuda_persist: Should we persist the NVIDIA devices?
+- cuda_persist_user: Sets the username in which the persistence daemon drops to after initializing the drivers. Default: root
 
 Example Playbook
 ----------------

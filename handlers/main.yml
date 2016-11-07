@@ -3,19 +3,13 @@
 - name: reload systemd unit files
   shell: systemctl daemon-reload
 
-- name: Initialize the GPUs
-  command: /bin/bash /usr/local/bin/cuda_init.sh
-  when:
-    - cuda_init
-    - cuda_init_restart_service
-
-- name: Restart cuda_init service
+- name: Restart nvidia_persistence service
   service:
-    name: cuda_init
+    name: nvidia_persistence
     state: restarted
   when:
-    - cuda_init
-    - cuda_init_restart_service
+    - cuda_persist
+    - cuda_persist_restart_services
     - ansible_service_mgr == "systemd"
 
 - name: ZZ CUDA Restart server
